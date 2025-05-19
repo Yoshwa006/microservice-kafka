@@ -19,7 +19,7 @@ This sends the `message` parameter to the Kafka topic `reqbox`.
 
 1. The **Main Service** receives an HTTP request with a message parameter and sends it to Kafka topic `reqbox`.  
 2. The **Reverse Service** (consumer running on port 8080) listens to `reqbox`, reverses the string, and publishes it to `ansbox`.  
-3. The **Answer Consumer** listens on `ansbox` and prints the reversed message.
+3. The **Main Service** listens on `ansbox` and prints the reversed message.
 
 ---
 
