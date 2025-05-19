@@ -1,35 +1,26 @@
 # Kafka Microservices Example
 
-This project demonstrates a simple Kafka-based microservices setup with two services:
+## Main Service (Producer)
 
-- **Producer Service** (Main Service)  
-  - Runs on **port 3000**  
-  - Sends string messages to Kafka topic `reqbox`  
+- Runs on **http://localhost:3000**  
+- Endpoint: `POST /kafka`  
+- Sends messages to Kafka topic `reqbox` via query parameter
 
-- **Reverse Service** (Consumer Service)  
-  - Runs on **port 8080**  
-  - Listens on Kafka topic `reqbox`  
-  - Reverses incoming strings  
-  - Sends reversed strings to Kafka topic `ansbox`  
+**Example API call:**
 
-- **Answer Consumer Service** (Optional)  
-  - Listens on Kafka topic `ansbox`  
-  - Prints reversed strings to console  
+POST http://localhost:3000/kafka?message=blahblah4
 
-## How it works
 
-1. Producer sends a string message to Kafka topic `reqbox`.  
-2. Reverse service consumes the message, reverses the string, and sends it to topic `ansbox`.  
-3. Answer consumer service consumes the reversed string and logs it.  
+This sends the `message` parameter to the Kafka topic `reqbox`.
 
-## Running the Services
+---
 
-- Start Kafka and Zookeeper locally or connect to a Kafka cluster.  
-- Run the **Producer service** on port `3000`.  
-- Run the **Reverse service** on port `8080`.  
-- Optionally, run the answer consumer service to see reversed strings printed.  
+## Microservice Flow
 
-## Example API Call
+1. The **Main Service** receives an HTTP request with a message parameter and sends it to Kafka topic `reqbox`.  
+2. The **Reverse Service** (consumer running on port 8080) listens to `reqbox`, reverses the string, and publishes it to `ansbox`.  
+3. The **Answer Consumer** listens on `ansbox` and prints the reversed message.
 
-Send a message from producer service:
+---
 
+This setup demonstrates a simple Kafka-based message processing pipeline with a clear producer-consumer flow.
